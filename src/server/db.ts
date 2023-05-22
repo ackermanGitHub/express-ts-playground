@@ -35,7 +35,7 @@ const getPostgresPort = () => {
   return parseInt(process.env.POSTGRES_PORT);
 };
 
-export const pool = new Pool({
+const pool = new pg.Pool({
   user: getPostgresUser(),
   host: getPostgresHost(),
   database: getPostgresDatabase(),
@@ -43,3 +43,5 @@ export const pool = new Pool({
   port: getPostgresPort(),
   ssl: true,
 });
+
+export default pool
