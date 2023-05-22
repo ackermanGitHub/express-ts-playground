@@ -30,3 +30,9 @@ app.get("/todos", async (req, res) => {
         client.release()
     }
 })
+
+app.get("/", async (req, res) => {
+    res.status(200).send({
+        message: "Hello World"
+    })
+})
