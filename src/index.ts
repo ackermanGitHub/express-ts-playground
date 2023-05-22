@@ -1,7 +1,9 @@
 import dotenv from 'dotenv'
+// loads .env file contents into process.env.
 dotenv.config()
 
 import express from "express";
+// Creates an Express application.
 const app = express();
 
 // middleware
@@ -14,8 +16,17 @@ app.listen(
     () => console.log(`Server is running on port ${process.env.PORT}`)
 )
 
-app.get("/", (req, res) => {
-    res.status(200).send({
-        message: "Hello World"
-    })
+app.get("/todos", async (req, res) => {
+    const client = await pool.connect()
+    try {
+        const todos = await client.query("SELECT * FROM todos ORDER BY todo_id ASC")
+        res.status(200).send(todos)
+    } catch (error) {
+        console.log(error)
+        res.status(500).send({
+            message: "Server Error"
+        })
+    } finally {
+        client.release()
+    }
 })
