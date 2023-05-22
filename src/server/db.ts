@@ -1,4 +1,8 @@
-import { Pool } from 'pg';
+import dotenv from 'dotenv'
+// loads .env file contents into process.env.
+dotenv.config()
+
+import pg from 'pg';
 
 const getPostgresUser = () => {
   if (!process.env.POSTGRES_USER) {
